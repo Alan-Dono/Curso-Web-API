@@ -2,6 +2,9 @@
 using Microsoft.EntityFrameworkCore;
 using WebApiAutores.Entidades;
 using System;
+using WebApiAutores.Utilidades;
+using WebApiAutores.DTOs;
+using AutoMapper;
 
 namespace WebApiAutores.Controllers
 {
@@ -10,22 +13,32 @@ namespace WebApiAutores.Controllers
     public class AutorController : ControllerBase
     {
         private readonly ApplicationDbContext context;
+        private readonly IMapper mapper;
 
-        public AutorController(ApplicationDbContext context)
+        public AutorController(ApplicationDbContext context, IMapper mapper)
         {
             this.context = context;
+            this.mapper = mapper;
         }
 
 
         [HttpGet]
         public async Task<ActionResult<List<Autor>>> Get()
         {
-            return await context.Autores.Include(x => x.libros).ToListAsync();
+            return await context.Autores.ToListAsync();
         }
 
         [HttpPost]
-        public async Task<ActionResult<Autor>> Post(Autor autor)
+        public async Task<ActionResult<Autor>> Post(AutorCreacionDTO autorCreacionDTO)
         {
+            var ExisteConMismoNombre = await context.Autores.AnyAsync(x => x.nombre == autorCreacionDTO.nombre);
+            if (ExisteConMismoNombre)
+            {
+                return BadRequest($"Ya existe un autor con el nombre {autorCreacionDTO.nombre}");
+            }
+
+            var autor = mapper.Map<Autor>(autorCreacionDTO); // destino / fuente
+
             context.Add(autor);
             await context.SaveChangesAsync();
             return Ok();

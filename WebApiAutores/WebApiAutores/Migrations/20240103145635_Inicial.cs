@@ -14,7 +14,7 @@ namespace WebApiAutores.Migrations
                 {
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    nombre = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    nombre = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -27,33 +27,21 @@ namespace WebApiAutores.Migrations
                 {
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    titulo = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    idAutor = table.Column<int>(type: "int", nullable: false),
-                    autorid = table.Column<int>(type: "int", nullable: true)
+                    titulo = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Libros", x => x.id);
-                    table.ForeignKey(
-                        name: "FK_Libros_Autores_autorid",
-                        column: x => x.autorid,
-                        principalTable: "Autores",
-                        principalColumn: "id");
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Libros_autorid",
-                table: "Libros",
-                column: "autorid");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Libros");
+                name: "Autores");
 
             migrationBuilder.DropTable(
-                name: "Autores");
+                name: "Libros");
         }
     }
 }

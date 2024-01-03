@@ -22,6 +22,8 @@ namespace WebApiAutores
 
             services.AddSwaggerGen();
 
+            services.AddAutoMapper(typeof(Startup));
+
         }
 
 
