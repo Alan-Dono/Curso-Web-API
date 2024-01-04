@@ -9,6 +9,10 @@ namespace WebApiAutores.Utilidades
         public AutoMapperProfiles()
         {
             CreateMap<AutorCreacionDTO, Autor>(); // fuente / destino
+            CreateMap<Autor, AutorLeerDTO>();
+            CreateMap<AutorLeerDTO, Autor>(); // para el update
+            CreateMap<Libro, LibroDTO>();
+            CreateMap<LibroCreacionDTO, Libro>();
         }
     }
 }

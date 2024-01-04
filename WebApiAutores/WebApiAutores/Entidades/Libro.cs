@@ -5,8 +5,11 @@ namespace WebApiAutores.Entidades
     public class Libro
     {
         public int id { get; set; }
+        [Required]
         [MaxLength(120)]
         public string titulo { get; set; }
- 
+        public List<Comentarios> comentarios { get; set; }
+
+
     }
 }
