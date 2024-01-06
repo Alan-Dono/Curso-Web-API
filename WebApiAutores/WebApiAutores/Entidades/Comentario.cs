@@ -1,6 +1,6 @@
 ﻿namespace WebApiAutores.Entidades
 {
-    public class Comentarios
+    public class Comentario
     {
         public int id { get; set; }
         public string contenido { get; set; }

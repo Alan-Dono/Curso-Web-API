@@ -8,7 +8,7 @@ namespace WebApiAutores.Entidades
         [Required]
         [MaxLength(120)]
         public string titulo { get; set; }
-        public List<Comentarios> comentarios { get; set; }
+        public List<Comentario> comentarios { get; set; }
 
 
     }
