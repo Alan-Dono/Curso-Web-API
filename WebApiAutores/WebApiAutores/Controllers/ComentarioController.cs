@@ -43,7 +43,6 @@ namespace WebApiAutores.Controllers
                 return NotFound();
             }
             var comentarios = await context.Comentarios.Where(x => x.libroId == libroId).ToListAsync();
-
             return  mapper.Map<List<ComentarioDTO>>(comentarios);
         }
       

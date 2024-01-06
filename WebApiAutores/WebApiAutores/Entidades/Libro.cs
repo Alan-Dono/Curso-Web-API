@@ -9,7 +9,7 @@ namespace WebApiAutores.Entidades
         [MaxLength(120)]
         public string titulo { get; set; }
         public List<Comentario> comentarios { get; set; }
-
+        public List<AutoreLibro> AutoresLibros { get; set; }
 
     }
 }
