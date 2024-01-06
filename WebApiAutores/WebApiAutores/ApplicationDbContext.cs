@@ -14,7 +14,7 @@ namespace WebApiAutores
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<AutoreLibro>().
+            modelBuilder.Entity<AutorLibro>().
                 HasKey(libroAutor => new { libroAutor.AutorId, libroAutor.LibroId }); // Configuramos la clave primaria de la tabla AutoresLibros
         }
 
@@ -28,7 +28,7 @@ namespace WebApiAutores
         public DbSet<Autor> Autores  { get; set; }
         public DbSet<Libro> Libros { get; set; }
         public DbSet<Comentario> Comentarios { get; set; }
-        public DbSet<AutoreLibro> AutoresLibros { get; set; }
+        public DbSet<AutorLibro> AutoresLibros { get; set; }
 
     }
 }

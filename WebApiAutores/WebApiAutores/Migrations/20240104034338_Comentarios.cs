@@ -9,7 +9,7 @@ namespace WebApiAutores.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AlterColumn<string>(
-                name: "titulo",
+                name: "Titulo",
                 table: "Libros",
                 type: "nvarchar(120)",
                 maxLength: 120,
@@ -52,7 +52,7 @@ namespace WebApiAutores.Migrations
                 name: "Comentarios");
 
             migrationBuilder.AlterColumn<string>(
-                name: "titulo",
+                name: "Titulo",
                 table: "Libros",
                 type: "nvarchar(120)",
                 maxLength: 120,

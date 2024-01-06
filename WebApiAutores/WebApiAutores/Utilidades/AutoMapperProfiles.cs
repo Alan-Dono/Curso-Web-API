@@ -12,9 +12,22 @@ namespace WebApiAutores.Utilidades
             CreateMap<Autor, AutorLeerDTO>();
             CreateMap<AutorLeerDTO, Autor>(); // para el update
             CreateMap<Libro, LibroDTO>();
-            CreateMap<LibroCreacionDTO, Libro>();
+            CreateMap<LibroCreacionDTO, Libro>()
+                .ForMember(libro => libro.AutoresLibros, opciones => opciones.MapFrom(MapAutoreLibro));
             CreateMap<ComentarioCreacionDTO, Comentario>();
             CreateMap<Comentario, ComentarioDTO>();
+        }
+
+
+        private List<AutorLibro> MapAutoreLibro(LibroCreacionDTO libroCreacionDTO, Libro libro)
+        {
+            var resultado = new List<AutorLibro>();
+            if (resultado == null) { return resultado;} // se valida en otra parte porque no es responsabilidad de esta clase
+            foreach(var autorId in libroCreacionDTO.AutoresIds)
+            {
+                resultado.Add(new AutorLibro() { AutorId = autorId });
+            }
+            return resultado;
         }
     }
 }

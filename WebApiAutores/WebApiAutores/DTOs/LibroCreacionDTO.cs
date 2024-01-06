@@ -4,6 +4,8 @@ namespace WebApiAutores.DTOs
 {
     public class LibroCreacionDTO
     {
-        public string titulo { get; set; }
+        [StringLength(maximumLength:120)]
+        public string Titulo { get; set; }
+        public List<int> AutoresIds { get; set; }
     }
 }

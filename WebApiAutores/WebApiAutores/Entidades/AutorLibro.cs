@@ -1,6 +1,6 @@
 ﻿namespace WebApiAutores.Entidades
 {
-    public class AutoreLibro
+    public class AutorLibro
     {
         public int LibroId { get; set; }
         public int AutorId { get; set; }
