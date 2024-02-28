@@ -74,7 +74,7 @@ namespace WebApiAutores.Controllers
             {
                 return NotFound();
             }
-            var libroDTO = mapper.Map<LibroDTO>(libroDB);
+            var libroDTO = mapper.Map<LibroPatchDTO>(libroDB);
 
             patchDocument.ApplyTo(libroDTO, ModelState);
             var esValido = TryValidateModel(libroDTO);
