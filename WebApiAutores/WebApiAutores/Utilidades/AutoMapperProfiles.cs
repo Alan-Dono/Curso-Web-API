@@ -14,12 +14,13 @@ namespace WebApiAutores.Utilidades
                 .ForMember(autorDTO => autorDTO.libros, opciones => opciones.MapFrom(MapAutorLibros));
             CreateMap<AutorLeerDTO, Autor>(); // para el update
 
-            CreateMap<Libro, LibroDTO>();
-            CreateMap<Libro, LibroDTOConAutores>()
-                .ForMember(libroDTO => libroDTO.autores, opciones => opciones.MapFrom(MapLibroDTOAutores));
+
             CreateMap<LibroPatchDTO, Libro>().ReverseMap();
+            CreateMap<Libro, LibroDTO>().ReverseMap();
             CreateMap<LibroCreacionDTO, Libro>()
                 .ForMember(libro => libro.AutoresLibros, opciones => opciones.MapFrom(MapAutoreLibro));
+            CreateMap<Libro, LibroDTOConAutores>()
+                .ForMember(libroDTO => libroDTO.autores, opciones => opciones.MapFrom(MapLibroDTOAutores));
 
             CreateMap<ComentarioCreacionDTO, Comentario>();
             CreateMap<Comentario, ComentarioDTO>();

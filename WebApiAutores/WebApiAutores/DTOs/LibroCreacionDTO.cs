@@ -6,7 +6,7 @@ namespace WebApiAutores.DTOs
     {
         [StringLength(maximumLength:120)]
         [Required]
-        public string Titulo { get; set; }
+        public string titulo { get; set; }
         public DateTime FechaPublicacion { get; set; }
         public List<int> AutoresIds { get; set; }
     }

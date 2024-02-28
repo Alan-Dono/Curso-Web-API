@@ -83,7 +83,7 @@ namespace WebApiAutores.Controllers
                 return BadRequest(ModelState);
             }
 
-            mapper.Map<LibroDTO>(libroDB);
+            mapper.Map(libroDTO, libroDB);
             await context.SaveChangesAsync();
             return NoContent();
         }
