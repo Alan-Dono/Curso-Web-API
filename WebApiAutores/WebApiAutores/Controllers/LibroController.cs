@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebApiAutores.DTOs;
@@ -45,7 +46,7 @@ namespace WebApiAutores.Controllers
             var autoresIds = await context.Autores
                 .Where(autorBd => libroCreacionDTO.AutoresIds.Contains(autorBd.id))
                 .Select(x => x.id).ToListAsync();
-            
+
             if (libroCreacionDTO.AutoresIds.Count != autoresIds.Count)
             {
                 return BadRequest("Falta alguno de los autores enviados");
@@ -59,5 +60,33 @@ namespace WebApiAutores.Controllers
             return CreatedAtRoute("GetLibro", new { libro.id }, libroDTO);
 
         }
+
+        [HttpPatch("{id:int}")]
+        public async Task<ActionResult> Patch(int id, JsonPatchDocument<LibroPatchDTO> patchDocument)
+        {
+            if (patchDocument == null)
+            {
+                return BadRequest();
+            }
+
+            var libroDB = await context.Libros.FirstOrDefaultAsync(x => x.id == id);
+            if (libroDB == null)
+            {
+                return NotFound();
+            }
+            var libroDTO = mapper.Map<LibroDTO>(libroDB);
+
+            patchDocument.ApplyTo(libroDTO, ModelState);
+            var esValido = TryValidateModel(libroDTO);
+            if (!esValido)
+            {
+                return BadRequest(ModelState);
+            }
+
+            mapper.Map<LibroDTO>(libroDB);
+            await context.SaveChangesAsync();
+            return NoContent();
+        }
+
     }
 }
