@@ -19,13 +19,17 @@ namespace WebApiAutores.Controllers
             this.mapper = mapper;
         }
 
-        [HttpGet("{id:int}")]
+        [HttpGet("{id:int}", Name = "GetLibro")]
         public async Task<ActionResult<LibroDTOConAutores>> Get(int id)
         {
             var libro = await context.Libros
                 .Include(libroDB => libroDB.AutoresLibros)
                 .ThenInclude(autorDB => autorDB.Autor)
                 .FirstOrDefaultAsync(x => x.id == id);
+            if (libro == null)
+            {
+                return NotFound();
+            }
             libro.AutoresLibros = libro.AutoresLibros.OrderBy(x => x.Orden).ToList();
             return mapper.Map<LibroDTOConAutores>(libro);
         }
@@ -51,7 +55,8 @@ namespace WebApiAutores.Controllers
             var libro = mapper.Map<Libro>(libroCreacionDTO);
             context.Add(libro);
             await context.SaveChangesAsync();
-            return Ok();
+            var libroDTO = mapper.Map<LibroDTO>(libro);
+            return CreatedAtRoute("GetLibro", new { libro.id }, libroDTO);
 
         }
     }
