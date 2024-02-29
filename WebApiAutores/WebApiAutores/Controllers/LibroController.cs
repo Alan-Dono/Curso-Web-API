@@ -88,5 +88,19 @@ namespace WebApiAutores.Controllers
             return NoContent();
         }
 
+        [HttpDelete("{id:int}")] // Delete
+        public async Task<ActionResult> Delete(int id)
+        {
+            var existe = await context.Libros.AnyAsync(x => x.id == id);
+            if (!existe)
+            {
+                return NotFound();
+            }
+            context.Remove(new Libro { id = id });
+            await context.SaveChangesAsync();
+            return NoContent();
+
+        }
+
     }
 }

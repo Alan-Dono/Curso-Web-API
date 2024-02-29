@@ -98,22 +98,6 @@ namespace WebApiAutores.Controllers
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         }
     }
 }
