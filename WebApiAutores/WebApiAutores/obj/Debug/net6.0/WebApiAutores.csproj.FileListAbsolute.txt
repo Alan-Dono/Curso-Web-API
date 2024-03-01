@@ -69,3 +69,5 @@ C:\Users\ALAN\Desktop\Curso-Web-API\WebApiAutores\WebApiAutores\bin\Debug\net6.0
 C:\Users\ALAN\Desktop\Curso-Web-API\WebApiAutores\WebApiAutores\bin\Debug\net6.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
 C:\Users\ALAN\Desktop\Curso-Web-API\WebApiAutores\WebApiAutores\bin\Debug\net6.0\Newtonsoft.Json.dll
 C:\Users\ALAN\Desktop\Curso-Web-API\WebApiAutores\WebApiAutores\bin\Debug\net6.0\Newtonsoft.Json.Bson.dll
+C:\Users\ALAN\Desktop\Curso-Web-API\WebApiAutores\WebApiAutores\bin\Debug\net6.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+C:\Users\ALAN\Desktop\Curso-Web-API\WebApiAutores\WebApiAutores\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll

@@ -6,6 +6,8 @@ using System;
 using WebApiAutores.Utilidades;
 using WebApiAutores.DTOs;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace WebApiAutores.Controllers
 {
@@ -24,6 +26,7 @@ namespace WebApiAutores.Controllers
 
 
         [HttpGet] // Todos los autores
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<ActionResult<List<AutorLeerDTO>>> Get()
         {
             var autores =  await context.Autores.ToListAsync();
