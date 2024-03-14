@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.OpenApi.Models;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace WebApiAutores
 {
@@ -12,6 +13,7 @@ namespace WebApiAutores
     {
         public Startup(IConfiguration configuration)
         {
+            JwtSecurityTokenHandler.DefaultOutboundClaimTypeMap.Clear(); // borra el mapeo de los tipos de los claims 
             Configuration = configuration;
         }
 
@@ -30,6 +32,7 @@ namespace WebApiAutores
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebApiAutores", Version = "v1" });
+
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
                     Name = "Authorization",
@@ -49,7 +52,7 @@ namespace WebApiAutores
                                 Id = "Bearer"
                             }
                          },
-                        new string[] {}
+                        new string[]{}
                     }
                 }); 
             });
@@ -72,6 +75,12 @@ namespace WebApiAutores
             services.AddIdentity<IdentityUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
+
+            services.AddAuthorization(opciones =>
+            {
+                opciones.AddPolicy("EsAdim", politica => politica.RequireClaim("esAdmin")); // claim para admin
+                //opciones.AddPolicy("EsVendedor", politica => politica.RequireClaim("EsVendedor"));
+            });
         }
 
 

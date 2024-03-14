@@ -13,6 +13,7 @@ namespace WebApiAutores.Controllers
 {
     [ApiController]
     [Route("api/autores")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy ="EsAdmin")] // proteger rutas
     public class AutorController : ControllerBase
     {
         private readonly ApplicationDbContext context;
@@ -26,7 +27,7 @@ namespace WebApiAutores.Controllers
 
 
         [HttpGet] // Todos los autores
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [AllowAnonymous] // permitir uso a anonimos
         public async Task<ActionResult<List<AutorLeerDTO>>> Get()
         {
             var autores =  await context.Autores.ToListAsync();
