@@ -9,11 +9,12 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 
+
 namespace WebApiAutores.Controllers
 {
     [ApiController]
     [Route("api/autores")]
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy ="EsAdmin")] // proteger rutas
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = "EsAdmin")] // proteger rutas
     public class AutorController : ControllerBase
     {
         private readonly ApplicationDbContext context;

@@ -78,8 +78,15 @@ namespace WebApiAutores
 
             services.AddAuthorization(opciones =>
             {
-                opciones.AddPolicy("EsAdim", politica => politica.RequireClaim("esAdmin")); // claim para admin
-                //opciones.AddPolicy("EsVendedor", politica => politica.RequireClaim("EsVendedor"));
+                opciones.AddPolicy("EsAdmin", politica => politica.RequireClaim("esAdmin")); // claim para admin
+            });
+
+            services.AddCors(opciones =>
+            {
+                opciones.AddDefaultPolicy(builder =>
+                {
+                    builder.WithOrigins("").AllowAnyMethod().AllowAnyHeader();
+                });
             });
         }
 
@@ -97,6 +104,8 @@ namespace WebApiAutores
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors();
 
             app.UseAuthorization();
 

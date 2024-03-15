@@ -33,7 +33,7 @@ namespace WebApiAutores.Controllers
 
             if (resultado.Succeeded)
             {
-                return ConstruirToken(credenciales);
+                return await ConstruirToken(credenciales);
             }
             else
             {
@@ -48,7 +48,7 @@ namespace WebApiAutores.Controllers
 
             if (resultado.Succeeded)
             {
-                return ConstruirToken(credencialesUsuario);
+                return await ConstruirToken(credencialesUsuario);
             }
             else
             {
@@ -58,7 +58,7 @@ namespace WebApiAutores.Controllers
 
         [HttpGet("RenovarToken")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        public ActionResult<RespuestaAutenticacion> RenovarToken()
+        public async Task<ActionResult<RespuestaAutenticacion>> RenovarToken()
         {
             var emailClaim = HttpContext.User.Claims.Where(claim => claim.Type == "Email").FirstOrDefault();
             var email = emailClaim.Value;
@@ -66,17 +66,20 @@ namespace WebApiAutores.Controllers
             {
                 Email = email,
             };
-            return ConstruirToken(credencialesUsuario);
+            return await ConstruirToken(credencialesUsuario);
         }
 
 
   
-        private RespuestaAutenticacion ConstruirToken(CredencialesUsuario credencialesUsuario)
+        private async Task<RespuestaAutenticacion> ConstruirToken(CredencialesUsuario credencialesUsuario)
         {
             var claim = new List<Claim>()
             {
                 new Claim("Email",credencialesUsuario.Email)
             };
+            var usuario = await userManager.FindByEmailAsync(credencialesUsuario.Email);
+            var claimsDB = await userManager.GetClaimsAsync(usuario);
+            claim.AddRange(claimsDB);
             var llave = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["llavejwt"]));
             var creds = new SigningCredentials(llave, SecurityAlgorithms.HmacSha256);
             var expiracion = DateTime.UtcNow.AddMinutes(30);
@@ -92,6 +95,22 @@ namespace WebApiAutores.Controllers
                 token = new JwtSecurityTokenHandler().WriteToken(securityToken),
                 expiracion = expiracion
             };
+        }
+
+        [HttpPost("HacerAdministrador")]
+        public async Task<ActionResult> HacerAdmin(EditarAdminDTO editarAdminDTO)
+        {
+            var usuario = await userManager.FindByEmailAsync(editarAdminDTO.Email);
+            await userManager.AddClaimAsync(usuario, new Claim("esAdmin", "EsAdministrador"));
+            return NoContent();
+        }
+
+        [HttpPost("QuitarAdministrador")]
+        public async Task<ActionResult> QuitarAdmin(EditarAdminDTO editarAdminDTO)
+        {
+            var usuario = await userManager.FindByEmailAsync(editarAdminDTO.Email);
+            await userManager.RemoveClaimAsync(usuario, new Claim("esAdmin", "EsAdministrador"));
+            return NoContent();
         }
     }
 }
