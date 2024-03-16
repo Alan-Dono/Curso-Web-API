@@ -20,7 +20,7 @@ namespace WebApiAutores.Controllers
             this.mapper = mapper;
         }
 
-        [HttpGet("{id:int}", Name = "GetLibro")]
+        [HttpGet("{id:int}", Name = "obtenerLibro")]
         public async Task<ActionResult<LibroDTOConAutores>> Get(int id)
         {
             var libro = await context.Libros
@@ -35,7 +35,7 @@ namespace WebApiAutores.Controllers
             return mapper.Map<LibroDTOConAutores>(libro);
         }
 
-        [HttpPost]
+        [HttpPost(Name ="crearLibro")]
         public async Task<ActionResult> Post(LibroCreacionDTO libroCreacionDTO)
         {
             if (libroCreacionDTO.AutoresIds == null)
@@ -61,7 +61,24 @@ namespace WebApiAutores.Controllers
 
         }
 
-        [HttpPatch("{id:int}")]
+        [HttpPut("{id:int}",Name ="actualizarLibro")]
+        public async Task<ActionResult> Put(int id, LibroCreacionDTO libroCreacionDTO)
+        {
+            var libroDb = await context.Libros
+                .Include(x => x.AutoresLibros)
+                .FirstOrDefaultAsync(x => x.id == id);
+            if (libroDb == null)
+            {
+                return NotFound();  
+            }
+            libroDb = mapper.Map(libroCreacionDTO,libroDb);
+            AsignarOrdenAutores(libroDb);
+            await context.SaveChangesAsync();
+            return NoContent();
+        }
+
+
+        [HttpPatch("{id:int}", Name ="patchLibro")]
         public async Task<ActionResult> Patch(int id, JsonPatchDocument<LibroPatchDTO> patchDocument)
         {
             if (patchDocument == null)
@@ -88,7 +105,7 @@ namespace WebApiAutores.Controllers
             return NoContent();
         }
 
-        [HttpDelete("{id:int}")] // Delete
+        [HttpDelete("{id:int}", Name ="eliminarLibro")] // Delete
         public async Task<ActionResult> Delete(int id)
         {
             var existe = await context.Libros.AnyAsync(x => x.id == id);
@@ -102,5 +119,16 @@ namespace WebApiAutores.Controllers
 
         }
 
+        private void AsignarOrdenAutores(Libro libro)
+        {
+            if (libro.AutoresLibros != null)
+            {
+                for (int i = 0; i < libro.AutoresLibros.Count; i++)
+                {
+                    libro.AutoresLibros[i].Orden = i;
+                }
+            }
+
+        }
     }
 }
