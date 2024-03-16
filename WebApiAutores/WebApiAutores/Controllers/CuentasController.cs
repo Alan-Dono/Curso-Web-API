@@ -3,10 +3,12 @@ using System.Security.Claims;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using WebApiAutores.DTOs;
+using WebApiAutores.Services;
 
 namespace WebApiAutores.Controllers
 {
@@ -17,12 +19,62 @@ namespace WebApiAutores.Controllers
         private readonly UserManager<IdentityUser> userManager;
         private readonly IConfiguration configuration;
         private readonly SignInManager<IdentityUser> signInManager;
+        private readonly HashService hashService;
+        private readonly IDataProtector dataProtector;
 
-        public CuentasController(UserManager<IdentityUser> userManager, IConfiguration configuration, SignInManager<IdentityUser> signInManager )
+        public CuentasController(UserManager<IdentityUser> userManager,
+            IConfiguration configuration,
+            SignInManager<IdentityUser> signInManager,
+            IDataProtectionProvider dataProtectionProvider,
+            HashService hashService)
         {
             this.userManager = userManager;
             this.configuration = configuration;
             this.signInManager = signInManager;
+            this.hashService = hashService;
+            dataProtector = dataProtectionProvider.CreateProtector("VALOR_UNICO_MEJOR_SECRETO_");
+        }
+
+        [HttpGet("hash/{textoPlano}")]
+        public ActionResult RealizarHash(string textoPlano)
+        {
+            var resultado1 = hashService.Hash(textoPlano);
+            var resultado2 = hashService.Hash(textoPlano);
+            return Ok(new
+            {
+                textoPlano = textoPlano,
+                resultado1 = resultado1,
+                resultado2 = resultado2,
+            });
+        }
+
+        [HttpGet("encriptar")]
+        public ActionResult Encriptar()
+        {
+            var textoPlano = "Alan Dono";
+            var textoCifrado = dataProtector.Protect(textoPlano);
+            var textoDesencriptado = dataProtector.Unprotect(textoCifrado);
+            return Ok(new
+            {
+                textoPlano = textoPlano,
+                textoCifrado = textoCifrado,
+                textoDesencriptado = textoDesencriptado
+            });
+        }
+
+        [HttpGet("encriptarPorTiepo")]
+        public ActionResult EncriptarPorTiempo()
+        {
+            var cifrarPorTiempo = dataProtector.ToTimeLimitedDataProtector();
+            var textoPlano = "Alan Dono";
+            var textoCifrado = cifrarPorTiempo.Protect(textoPlano, lifetime: TimeSpan.FromMinutes(30));
+            var textoDesencriptado = cifrarPorTiempo.Unprotect(textoCifrado);
+            return Ok(new
+            {
+                textoPlano = textoPlano,
+                textoCifrado = textoCifrado,
+                textoDesencriptado = textoDesencriptado
+            });
         }
 
         [HttpPost("registrar")] // api/cuentas/registrar

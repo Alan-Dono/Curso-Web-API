@@ -6,7 +6,8 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.OpenApi.Models;
 using System.IdentityModel.Tokens.Jwt;
-
+using WebApiAutores.Services;
+ 
 namespace WebApiAutores
 {
     public class Startup
@@ -88,6 +89,10 @@ namespace WebApiAutores
                     builder.WithOrigins("").AllowAnyMethod().AllowAnyHeader();
                 });
             });
+
+            services.AddDataProtection();
+
+            services.AddTransient<HashService>(); // transient porque no guarda estado
         }
 
 
