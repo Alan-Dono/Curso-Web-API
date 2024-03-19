@@ -32,7 +32,7 @@ namespace WebApiAutores.Controllers
         [HttpGet(Name = "obtenerAutores")] // Todos los autores
         [AllowAnonymous] // permitir uso a anonimos
         [ServiceFilter(typeof(HATEOASAutorFilterAttribute))]
-        public async Task<ActionResult<List<AutorLeerDTO>>> Get([FromHeader] string incluirHATEOAS) // tomamos de ejemplo NO HACER DE ESTA MANERA
+        public async Task<ActionResult<List<AutorLeerDTO>>> Get() // tomamos de ejemplo NO HACER DE ESTA MANERA
         {
             var autores =  await context.Autores.ToListAsync();
             return mapper.Map<List<AutorLeerDTO>>(autores);
@@ -41,7 +41,7 @@ namespace WebApiAutores.Controllers
         [HttpGet("{id:int}", Name ="obtenerAutorPorId")] // Autor por id
         [AllowAnonymous]
         [ServiceFilter(typeof(HATEOASAutorFilterAttribute))]
-        public async Task<ActionResult<AutorDTOConLibros>> Get(int id, [FromHeader] string incluirHATEOAS)
+        public async Task<ActionResult<AutorDTOConLibros>> Get(int id)
         {
             var autor = await context.Autores
                 .Include(autorDB => autorDB.AutoresLibros)
