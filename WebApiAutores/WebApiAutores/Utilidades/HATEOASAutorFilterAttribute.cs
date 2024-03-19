@@ -22,8 +22,17 @@ namespace WebApiAutores.Utilidades
                 return;
             }
             var resultado = context.Result as ObjectResult;
-            var modelo = resultado.Value as AutorLeerDTO ?? throw new ArgumentException("Se esperaba una instancia de AutorLeerDTO");
-            await generadorEnlaces.GenerarEnlaces(modelo);
+            var autorDTO = resultado.Value as AutorLeerDTO;
+            if(autorDTO == null)
+            {
+                var autoresDTO = resultado.Value as List<AutorLeerDTO> ?? throw new ArgumentException("Se esperaba una instancia AutorDTO o una Lista");
+                autoresDTO.ForEach(async autor => await generadorEnlaces.GenerarEnlaces(autor));
+                resultado.Value = autoresDTO;
+            }
+            else
+            {
+                await generadorEnlaces.GenerarEnlaces(autorDTO);
+            }
             await next();
         }
     }
