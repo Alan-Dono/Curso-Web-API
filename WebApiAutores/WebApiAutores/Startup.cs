@@ -7,7 +7,9 @@ using System.Text;
 using Microsoft.OpenApi.Models;
 using System.IdentityModel.Tokens.Jwt;
 using WebApiAutores.Services;
- 
+using WebApiAutores.Utilidades;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
+
 namespace WebApiAutores
 {
     public class Startup
@@ -93,6 +95,10 @@ namespace WebApiAutores
             services.AddDataProtection();
 
             services.AddTransient<HashService>(); // transient porque no guarda estado
+
+            services.AddTransient<GeneradorEnlaces>();
+            services.AddTransient<HATEOASAutorFilterAttribute>();
+            services.AddSingleton<IActionContextAccessor, ActionContextAccessor>(); 
         }
 
 
