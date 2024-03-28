@@ -9,7 +9,9 @@ using System.IdentityModel.Tokens.Jwt;
 using WebApiAutores.Services;
 using WebApiAutores.Utilidades;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Microsoft.AspNetCore.Mvc;
 
+[assembly: ApiConventionType(typeof(DefaultApiConventions))] // documenta todas las posibles respuestas a nivel de la aplicacion
 namespace WebApiAutores
 {
     public class Startup
@@ -95,8 +97,11 @@ namespace WebApiAutores
             {
                 opciones.AddDefaultPolicy(builder =>
                 {
-                    builder.WithOrigins("").AllowAnyMethod().AllowAnyHeader();
+                    builder.WithOrigins("").AllowAnyMethod().AllowAnyHeader()
+                    .WithExposedHeaders(new string[] { "cantidadTotalRegistros" });
                 });
+
+
             });
 
             services.AddDataProtection();
