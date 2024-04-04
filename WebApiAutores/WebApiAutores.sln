@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33516.290
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApiAutores", "WebApiAutores\WebApiAutores.csproj", "{1A11D130-B6FF-43F5-B9EE-5395C8D40B4A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApiAutores", "WebApiAutores\WebApiAutores.csproj", "{1A11D130-B6FF-43F5-B9EE-5395C8D40B4A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApiAutores.Test", "WebApiAutores.Test\WebApiAutores.Test.csproj", "{EBBCE1D6-FBD6-4F51-810B-356632BE8412}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{1A11D130-B6FF-43F5-B9EE-5395C8D40B4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1A11D130-B6FF-43F5-B9EE-5395C8D40B4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1A11D130-B6FF-43F5-B9EE-5395C8D40B4A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EBBCE1D6-FBD6-4F51-810B-356632BE8412}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EBBCE1D6-FBD6-4F51-810B-356632BE8412}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EBBCE1D6-FBD6-4F51-810B-356632BE8412}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EBBCE1D6-FBD6-4F51-810B-356632BE8412}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
