@@ -71,3 +71,4 @@ C:\Users\ALAN\Desktop\Curso-Web-API\WebApiAutores\WebApiAutores\bin\Debug\net6.0
 C:\Users\ALAN\Desktop\Curso-Web-API\WebApiAutores\WebApiAutores\bin\Debug\net6.0\Newtonsoft.Json.Bson.dll
 C:\Users\ALAN\Desktop\Curso-Web-API\WebApiAutores\WebApiAutores\bin\Debug\net6.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
 C:\Users\ALAN\Desktop\Curso-Web-API\WebApiAutores\WebApiAutores\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\ALAN\Desktop\Curso-Web-API\WebApiAutores\WebApiAutores\obj\Debug\net6.0\WebApiAutores.sourcelink.json

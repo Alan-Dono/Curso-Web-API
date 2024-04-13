@@ -10,6 +10,7 @@ using WebApiAutores.Services;
 using WebApiAutores.Utilidades;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
+using WebApiAutores.Filtros;
 
 [assembly: ApiConventionType(typeof(DefaultApiConventions))] // documenta todas las posibles respuestas a nivel de la aplicacion
 namespace WebApiAutores
@@ -28,6 +29,7 @@ namespace WebApiAutores
         {
             services.AddControllers(opciones =>
             {
+                opciones.Filters.Add(typeof(FiltroDeExcepcion));
                 opciones.Conventions.Add(new SwaggerAgrupaPorVersiones());
             })
                 .AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles)
@@ -110,7 +112,8 @@ namespace WebApiAutores
 
             services.AddTransient<GeneradorEnlaces>();
             services.AddTransient<HATEOASAutorFilterAttribute>();
-            services.AddSingleton<IActionContextAccessor, ActionContextAccessor>(); 
+            services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
+            services.AddApplicationInsightsTelemetry(Configuration["ApplicationsInsights: ConnctionString"]);
         }
 
 

@@ -1,0 +1,24 @@
+{
+  "dependencies": {
+    "mssql1": {
+      "restored": true,
+      "restoreTime": "2024-04-12T19:17:42.2989266Z"
+    },
+    "identityapp1": {
+      "restored": true,
+      "restoreTime": "2024-04-04T19:47:58.8354619Z"
+    }
+  },
+  "parameters": {
+    "mssql1.subscriptionId": {
+      "Name": "mssql1.subscriptionId",
+      "Type": "subscription",
+      "Value": "1ba901c6-3a17-45b3-ab5a-cc5f42bfe63e"
+    },
+    "mssql1.resourceGroupName": {
+      "Name": "mssql1.resourceGroupName",
+      "Type": "resourceGroup",
+      "Value": "WebApiAutores"
+    }
+  }
+}
